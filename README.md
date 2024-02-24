@@ -3,18 +3,7 @@
 ## Overview
 PyFinance is a robust data pipeline designed for a hedge fund that relies on technical analysis for trading. This pipeline processes and analyzes large volumes of historical stock data, specifically Open, High, Low, and Close (OHLC) data, to support further analysis and model development.
 
-## Features
-- Data ingestion from various formats such as CSV and JSON, including sources like Yahoo Finance.
-- Data integrity validation checks for missing values, outliers, and consistency in data types.
-- Data transformation to calculate technical indicators like moving averages, Bollinger Bands, and Relative Strength Index (RSI).
-- Feature engineering for advanced trading strategy development.
-- Resampling capabilities to convert data frequencies (e.g., daily to hourly).
-- Data storage in SQLite databases with optimized formats for fast retrieval.
-
-## Bonus Features
-- Data compression to minimize storage costs.
-- Interactive data visualization tool integration.
-- Proactive data quality checks and alerts system.
+![PyFinance Dashboard Screenshot](images/screenshot.png)
 
 ## Technologies Used
 - Python
