@@ -1,13 +1,14 @@
 import sqlite3
 import pandas as pd
 
+
 def create_database(db_file):
     """
     Create SQLite database and table to store stock data.
     """
     conn = sqlite3.connect(db_file)
     cursor = conn.cursor()
-    
+
     # Create table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS stock_data (
@@ -30,16 +31,16 @@ def create_database(db_file):
     conn.commit()
     conn.close()
 
+
 def insert_data(df, db_file='stock_data.db'):
-    """
-    Insert transformed data into the SQLite database.
-    """
     with sqlite3.connect(db_file) as conn:
         try:
             df.to_sql('stock_data', conn, if_exists='append', index=False)
+        except sqlite3.IntegrityError as e:
+            print("Integrity Error:", e)
         except Exception as e:
             print("An error occurred:", e)
-            # Rollback is handled automatically if an exception occurs
+
 
 def query_data(ticker, db_file='stock_data.db'):
     """
@@ -49,6 +50,16 @@ def query_data(ticker, db_file='stock_data.db'):
     query = "SELECT * FROM stock_data WHERE Ticker = ?"
     df = pd.read_sql_query(query, conn, params=(ticker,))
     conn.close()
+    return df
+
+
+def query_data(ticker, db_file='test_stock_data.db'):
+    conn = sqlite3.connect(db_file)
+    try:
+        query = "SELECT * FROM stock_data WHERE Ticker = ?"
+        df = pd.read_sql_query(query, conn, params=(ticker,))
+    finally:
+        conn.close()
     return df
 
 # Example Usage (Uncomment to use)

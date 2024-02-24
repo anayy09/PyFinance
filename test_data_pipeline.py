@@ -1,3 +1,4 @@
+import time
 import pytest
 import pandas as pd
 from data_pipeline import calculate_sma, calculate_ema, calculate_rsi
@@ -35,10 +36,17 @@ def setup_function(function):
     # Create a new database for testing
     create_database(TEST_DB)
 
+
 def teardown_function(function):
-    # Remove the test database after the test is done
-    if os.path.exists(TEST_DB):
-        os.remove(TEST_DB)
+    retry_count = 3
+    while retry_count > 0:
+        try:
+            if os.path.exists(TEST_DB):
+                os.remove(TEST_DB)
+            break
+        except PermissionError:
+            time.sleep(1)  # Wait for 1 second before retrying
+            retry_count -= 1
 
 def test_insert_and_query_data():
     # Create a small DataFrame to insert
