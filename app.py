@@ -144,7 +144,5 @@ def update_chart(selected_ticker, selected_chart_type):
     return fig
 
 
-if __name__ == '__main__':
-    # app.run_server(debug=True)
-    app = dash.Dash(__name__)
-    server = app.server
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=8080)
