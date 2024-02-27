@@ -23,8 +23,12 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 def fetch_data(ticker):
     conn = sqlite3.connect(DB_FILE)
-    query = f"SELECT Date, Open, High, Low, Close, Volume, SMA_20, EMA_20, Bollinger_Upper, Bollinger_Lower, RSI_14 FROM stock_data WHERE Ticker = '{
-        ticker}'"
+    # Correctly terminated f-string below
+    query = f"""
+        SELECT Date, Open, High, Low, Close, Volume, SMA_20, EMA_20, Bollinger_Upper, Bollinger_Lower, RSI_14
+        FROM stock_data
+        WHERE Ticker = '{ticker}'
+    """
     df = pd.read_sql_query(query, conn, parse_dates=['Date'])
     conn.close()
     return df
@@ -141,4 +145,6 @@ def update_chart(selected_ticker, selected_chart_type):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    # app.run_server(debug=True)
+    app = dash.Dash(__name__)
+    server = app.server
